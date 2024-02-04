@@ -1,12 +1,19 @@
 import React, { useState } from "react";
-import axios from "axios"
-import {Link, useNavigate} from "react-router-dom"
+import axios from "axios";
+import { Link, useNavigate } from "react-router-dom";
+import {
+  signInFailure,
+  signInStart,
+  signInSucess,
+} from "../redux/user/userSlice";
+import { useDispatch, useSelector } from "react-redux";
 
 const SignIn = () => {
   const [formData, setFormData] = useState({});
-  const [error , setError] = useState(false)
-  const [loading , setLoading] = useState(false)
-  const navigate = useNavigate()
+  const { loading, error } = useSelector((state) => state.user) || {};
+
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleChange = (e) => {
     e.preventDefault();
@@ -17,44 +24,38 @@ const SignIn = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      setLoading(true);
-      const response = await axios.post('/api/auth/signin', formData, {
+      dispatch(signInStart());
+      const response = await axios.post("/api/auth/signin", formData, {
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
+        body: JSON.stringify(formData),
       });
 
       // Log the entire response for debugging
       console.log(response);
 
       const data = response.data;
-      setLoading(false);
-      setError(false);
+    
 
       if (data.success === false) {
-        setError(true);
+        dispatch(signInFailure(data));
         return;
       }
-
-      navigate("/")
+      dispatch(signInSucess(data));
+      navigate("/");
 
       console.log(JSON.stringify(data));
     } catch (error) {
-      console.error("Error during API request:", error);
-      setError(true);
-      setLoading(false);
+      dispatch(signInFailure(error));
     }
   };
-  
-  
-
 
   return (
     <div className="p-3 max-w-lg mx-auto">
       <h1 className="text-3xl text-center font-semibold my-7">Sign In</h1>
 
       <form onSubmit={handleSubmit} className="flex flex-col  gap-4">
-       
         <input
           type="text"
           placeholder="email"
@@ -70,19 +71,23 @@ const SignIn = () => {
           className="bg-slate-100 p-3 rounded-lg"
         />
 
-        <button disabled={loading} className="bg-slate-700 text-white p-4 rounded-lg uppercase hover:opacity-95 disabled:opacity-80">
+        <button
+          disabled={loading}
+          className="bg-slate-700 text-white p-4 rounded-lg uppercase hover:opacity-95 disabled:opacity-80"
+        >
           {" "}
-          {loading? 'loading...' : "Sign In"}
+          {loading ? "loading..." : "Sign In"}
         </button>
       </form>
       <div className="flex py-2 text-sm">
         <p className="text-gray-500">Dont Have an account ?</p>
         <Link to="/signup">
-        <span className="text-blue-500 px-2">Sign up</span></Link>
+          <span className="text-blue-500 px-2">Sign up</span>
+        </Link>
       </div>
-      <p className='text-red-700 mt-5'>{error && 'Something went wrong!'}</p>
+      <p className="text-red-700 mt-5">{error  ? error.message || "Something went wrong!" : ""}</p>
     </div>
   );
 };
 
-export default SignIn
+export default SignIn;

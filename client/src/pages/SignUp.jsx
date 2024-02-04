@@ -6,7 +6,7 @@ const SignUp = () => {
   const [formData, setFormData] = useState({});
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
-  ate(false);
+
   const navigate = useNavigate();
 
   const handleChange = (e) => {
