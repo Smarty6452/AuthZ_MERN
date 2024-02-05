@@ -13,7 +13,6 @@ const SignUp = () => {
     e.preventDefault();
     setFormData({ ...formData, [e.target.id]: e.target.value });
   };
-  // console.log(formData);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -49,43 +48,44 @@ const SignUp = () => {
     <div className="p-3 max-w-lg mx-auto">
       <h1 className="text-3xl text-center font-semibold my-7">Sign Up</h1>
 
-      <form onSubmit={handleSubmit} className="flex flex-col  gap-4">
+      <form onSubmit={handleSubmit} className="flex flex-col gap-4">
         <input
           type="text"
-          placeholder="username"
+          placeholder="Username"
           id="username"
           onChange={handleChange}
-          className="bg-slate-100 p-3 rounded-lg"
+          className="input-field"
         />
         <input
           type="text"
-          placeholder="email"
+          placeholder="Email"
           id="email"
           onChange={handleChange}
-          className="bg-slate-100 p-3 rounded-lg"
+          className="input-field"
         />
         <input
-          type="text"
-          placeholder="password"
+          type="password"
+          placeholder="Password"
           id="password"
           onChange={handleChange}
-          className="bg-slate-100 p-3 rounded-lg"
+          className="input-field"
         />
 
         <button
           disabled={loading}
-          className="bg-slate-700 text-white p-4 rounded-lg uppercase hover:opacity-95 disabled:opacity-80"
+          className="submit-btn"
         >
-          {" "}
-          {loading ? "loading..." : "Sign Up"}
+          {loading ? "Loading..." : "Sign Up"}
         </button>
       </form>
+
       <div className="flex py-2 text-sm">
-        <p className="text-gray-500">Have an account ?</p>
+        <p className="text-gray-500">Have an account?</p>
         <Link to="/signin">
           <span className="text-blue-500 px-2">Sign in</span>
         </Link>
       </div>
+
       <p className="text-red-700 mt-5">{error && "Something went wrong!"}</p>
     </div>
   );

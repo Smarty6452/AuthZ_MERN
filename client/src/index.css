@@ -7,3 +7,33 @@
     box-sizing: border-box;
     font-family: Arial, Helvetica, sans-serif;
   }
+
+  /* Add these styles to your CSS file or React component style attribute */
+
+.input-field {
+  background-color: #f0f4f8;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  border: 1px solid #cbd5e0;
+  transition: border-color 0.3s ease;
+}
+
+.input-field:focus {
+  outline: none;
+  border-color: #4a90e2;
+}
+
+.submit-btn {
+  background-color: #1a202c;
+  color: #fff;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.submit-btn:hover {
+  background-color: #2d3748;
+}
+
+/* Add any additional styles/animations as needed */

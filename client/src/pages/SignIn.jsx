@@ -19,7 +19,6 @@ const SignIn = () => {
     e.preventDefault();
     setFormData({ ...formData, [e.target.id]: e.target.value });
   };
-  // console.log(formData);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -36,7 +35,6 @@ const SignIn = () => {
       console.log(response);
 
       const data = response.data;
-    
 
       if (data.success === false) {
         dispatch(signInFailure(data));
@@ -55,37 +53,38 @@ const SignIn = () => {
     <div className="p-3 max-w-lg mx-auto">
       <h1 className="text-3xl text-center font-semibold my-7">Sign In</h1>
 
-      <form onSubmit={handleSubmit} className="flex flex-col  gap-4">
+      <form onSubmit={handleSubmit} className="flex flex-col gap-4">
         <input
           type="text"
-          placeholder="email"
+          placeholder="Email"
           id="email"
           onChange={handleChange}
-          className="bg-slate-100 p-3 rounded-lg"
+          className="input-field"
         />
         <input
-          type="text"
-          placeholder="password"
+          type="password"
+          placeholder="Password"
           id="password"
           onChange={handleChange}
-          className="bg-slate-100 p-3 rounded-lg"
+          className="input-field"
         />
 
         <button
           disabled={loading}
-          className="bg-slate-700 text-white p-4 rounded-lg uppercase hover:opacity-95 disabled:opacity-80"
+          className="submit-btn"
         >
-          {" "}
-          {loading ? "loading..." : "Sign In"}
+          {loading ? "Loading..." : "Sign In"}
         </button>
       </form>
+
       <div className="flex py-2 text-sm">
-        <p className="text-gray-500">Dont Have an account ?</p>
+        <p className="text-gray-500">Don't have an account?</p>
         <Link to="/signup">
           <span className="text-blue-500 px-2">Sign up</span>
         </Link>
       </div>
-      <p className="text-red-700 mt-5">{error  ? error.message || "Something went wrong!" : ""}</p>
+
+      <p className="text-red-700 mt-5">{error ? error.message || "Something went wrong!" : ""}</p>
     </div>
   );
 };
